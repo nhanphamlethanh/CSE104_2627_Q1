@@ -78,3 +78,42 @@ for (int i=maxOverlap; i>0; i--) {
 
 int shortest_length = S1.length() + S2.length() - overlap;
 ```
+
+### **EIEVERYN**
+```bash
+int m
+int n 
+int[] arr = new int[m];
+
+boolean[] check = new boolean[n+1];
+
+for (int i=0; i<m; i++) {
+    if (arr[i] <= n) {
+        check[arr[i]] = true;
+    }
+}
+boolean hasAll = true;
+for (int i=1; i<=n; i++)
+    if (check[i] != true) {
+        hasAll = false;
+        break;
+    }
+
+if (hasAll) 
+    YES
+else
+    NO
+```
+
+```bash
+VD:
+m = 7 
+n = 6
+
+5 2 1 2 2 5 3
+
+index 0     1     2     3     4     5     6
+            true  true  true        true
+```
+
+
