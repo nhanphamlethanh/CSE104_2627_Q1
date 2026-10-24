@@ -71,18 +71,18 @@ sysout(pay);
 
 ```bash
 Cách 2: 2 arrays + for loop
-long[] limits = {20_000_000, 100_000_000,
+long[] upper_bounds = {20_000_000, 100_000_000,
                  300_000_000, 600_000_000, 900_000_000, Long.MAX_VALUE};
 long[] rate = {3, 5, 7, 10, 12, 15};
 
-long previousLimit = 5_000_000;
+long lower_bound = 5_000_000;
 
-for (int i=0; i<limits.length; i++) {
-    if (N >= previousLimit) {
-        long amount = Math.min(N, limits[i]) - previousLimit;
+for (int i=0; i<rate.length; i++) {
+    if (N >= lower_bound) {
+        long amount = Math.min(N, upper_bounds[i]) - lower_bound;
         long discount = amount / 100 * rate[i];
         total_discount += discount;
-        previousLimit = limits[i];
+        lower_bound = upper_bounds[i];
     }
     else {
         break;
