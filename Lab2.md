@@ -89,3 +89,59 @@ for (int i=0; i<rate.length; i++) {
     }
 }
 ```
+
+### **EIUCUBES2**
+```bash
+- Có k loại gạch. Mỗi loại để xây 1 kim tự tháp.
+- Mỗi loại gạch có số lượng gạch khác nhau.
+? Tính chiều cao của mỗi kim tự tháp.
+--> Tìm H.
+
+Input:
+    int k
+    for each k:
+        long N
+
+Output:
+    for each k:
+        int H
+
+Binary search:
+low = 1
+high = 2_000_000
+mid --> H
+
+while (low <= high) {
+    long mid = low + (high - low) / 2;
+    long H = mid;
+    long total_bricks = H(H + 1)(H + 2)/6;
+    if (total_bricks <= N) {
+        low = mid + 1;
+    }
+    else {
+        high = mid - 1;
+    }
+}
+long height = (low + high) / 2;
+
+L1: 1 
+L2: 1 + 2
+L3: 1 + 2 + 3
+...
+L_i: 1 + 2 + 3 + ... + (i-1) + i => (i + 1)*i/2
+
+Tổng viên gạch để xây L1 đến L_i:
+        sum((i+1)*i/2) với i trong khoảng [1,H]
+        = H(H + 1)(H + 2)/6
+
+```
+
+
+```bash
+String[] hand = {"trai", "trai",.....}
+String[] finger = {"cai", "tro", ....}
+
+index = (N % 18) - 1;
+
+sysout("Ngon " + finger[index] + " cua ban tay " + hand[index]);
+```
