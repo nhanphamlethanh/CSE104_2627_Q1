@@ -34,4 +34,58 @@ Hướng dẫn:
     1. Tính số tiền được áp chiết khấu: amount
     2. Tính số tiền được giảm: discount
     3. Cộng discount vào total_discount
+
+- Tính amount tại mỗi ngưỡng:
+    Chỉ có 2 trường hợp xảy ra:
+        1. Nếu N >= max của ngưỡng:
+            amount = max - min
+        2. Ngược lại:
+            amount = N - min
+
+long N;
+long total_discount = 0;
+
+Cách 1: if-else
+Xét level 1:
+    if (N >= 5_000_000) {
+        long amount = Math.min(N, 20_000_000) - 5_000_000;
+        long discount = amount / 100 * 3;
+        total_discount += discount;
+    }
+Xét level 2:
+    if (N >= 20_000_000) {
+        long amount = Math.min(N, 100_000_000) - 20_000_000;
+        long discount = amount / 100 * 5;
+        total_discount += discount;
+    }
+Tương tự xét level 3-5.
+Xét level 6:
+    if (N >= 900_000_000) {
+        long amount = N - 900_000_000;
+        long discount = amount / 100 * 15;
+        total_discount += discount;
+    }
+long pay = N - total_discount;
+sysout(pay);
+```
+
+```bash
+Cách 2: 2 arrays + for loop
+long[] limits = {20_000_000, 100_000_000,
+                 300_000_000, 600_000_000, 900_000_000, Long.MAX_VALUE};
+long[] rate = {3, 5, 7, 10, 12, 15};
+
+long previousLimit = 5_000_000;
+
+for (int i=0; i<limits.length; i++) {
+    if (N >= previousLimit) {
+        long amount = Math.min(N, limits[i]) - previousLimit;
+        long discount = amount / 100 * rate[i];
+        total_discount += discount;
+        previousLimit = limits[i];
+    }
+    else {
+        break;
+    }
+}
 ```
