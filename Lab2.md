@@ -82,7 +82,7 @@ for (int i=0; i<rate.length; i++) {
         long amount = Math.min(N, upper_bounds[i]) - lower_bound;
         long discount = amount / 100 * rate[i];
         total_discount += discount;
-        lower_bound = upper_bounds[i];
+        lower_bound = upper_bounds[i]; // Cập nhật giá trị min cho ngưỡng tiếp theo
     }
     else {
         break;
