@@ -148,11 +148,14 @@ Arrays.sort(arr);
 for (int i=n-1; i>1; i--) {
     int a_index = 0;
     int b_index = i-1;
-    if (arr[a_index] + arr[b_index] <= arr[i]) {
-        a_index++;
-    }
-    else {
-        count += (b_index - a_index);
+    while (a_index < b_index) {
+        if (arr[a_index] + arr[b_index] <= arr[i]) {
+            a_index++;
+        }
+        else {
+            count += (b_index - a_index);
+            b_index--;
+        }
     }
 }
 ```
