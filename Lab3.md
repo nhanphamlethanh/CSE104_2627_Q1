@@ -44,8 +44,6 @@ Công thức:
 
 ### **EIGROSS2**
 
-https://docs.google.com/spreadsheets/d/1fPHnuLtHKYqqo8JDuW0ReYolmjSJLnvRmcUkz3zyWEE/edit?pli=1&gid=1700159211#gid=1700159211
-
 ```bash
 Biết net.
 Tính gross.
@@ -55,35 +53,75 @@ relief = 11 triệu
 taxed: phần lương đã bị áp thuế
 taxed = 15_750_000 - 11 triệu = 4_750_000
 
-Level 1:
-    - Lương sẽ bị áp thuế: taxable
-    lower bound = 0
-    upper bound = 5 triệu
-    => maximum taxable = 5 triệu
-    => số thuế tối đa = 250_000
-    - Lương đã bị áp thuế: taxed
-    lower bound = 0
-    upper bound = 4_750_000
-Level 2:
-    taxed:
-    lower bound = 
-    upper bound =
-
-
-
-
-
-gross = 19_000_000
-relief = 9 triệu
-=> taxable = 10 triệu => phần lương sẽ bị tính thuế
-
-l1: tax = 250_000
-l2: tax = 500_000
-=> tax = 750_000
-net = gross - tax = 18_250_000
-taxed = 18_250_000 - 9 triệu = 9_250_000
-taxed = taxable - tax
-(net - relief) = (gross - relief) - tax
-net = gross - tax
-
+Bảng quy đổi taxed:
+https://docs.google.com/spreadsheets/d/1fPHnuLtHKYqqo8JDuW0ReYolmjSJLnvRmcUkz3zyWEE/edit?pli=1&gid=1700159211#gid=1700159211
 ```
+```bash
+long net = sc.nextLong();
+long[] upper_bound = {4_750_000, 9_250_000, 16_050_000,
+                        27_250_000, 42_250_000, 61_850_000, Long.MAX_VALUE};
+int[] rate = {5, 10, 15, 20, 25, 30, 35};
+long lower_bound = 0;
+
+long taxed = net - 11_000_000;
+long tax = 0;
+
+for (int i=0; i<rate.length; i++) {
+    if (taxed > lower_bound) {
+        long amount = Math.min(taxed, upper_bound[i]) - lower_bound;
+        tax += amount * rate[i] / (100 - rate[i]);
+        lower_bound = upper_bound[i];
+    } else {
+        break;
+    }
+}
+long gross = net + tax;
+```
+
+### **DELIVERY FEE OPTIMIZATION**
+```bash
+VD:
+n = 4
+k = 2
+D = 20%
+
+d1 = 1.2
+d2 = 2.0
+d3 = 4.1
+d4 = 12.3
+
+Xét order 1:
+    Quãng đường: d1 = 1.2 => d1 = 2
+    => fee = 9999
+Order 2:
+    d2 = 2.0 = 2
+    => fee = 9999
+Order 3:
+    d3 = 4.1 => d3 = 5
+    => fee = 9999 + 3 * 5555 = 26_664
+    => after_discount_fee = 26_664 * 0.8 = 21_331
+Order 4:
+    d4 = 12.3 => d4 = 13
+    => fee = 9999 + 3*5555 + 5*4321 + 3*3199 = 57_866
+    => after_discount_fee = 57_866 * 0.8 = 46_292
+
+total_fee = 87_621
+```
+
+d1 = 2.1
+f1 = 9999 + 5555 = 15_554
+
+d2 = 3
+f2 = 15_554
+
+d3 = 7.5
+f3 = 9999 + 3*5555 + 3*4321 = 39_627
+
+d4 = 10
+f4 = 9999 + 3*555 + 5*4321 = 48_269
+
+d5 = 10.1
+f5 = 51_468
+f5 = 51_468 * 0.9 = 46_321
+
+total_fee = 165325
