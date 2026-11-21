@@ -52,6 +52,30 @@ Sau kỳ hạn (M % 12) tháng:
     balance = balance * (1 + rate[left_months-1]/100/12*left_months)
 ```
 
+```bash
+Savings 1:
+
+double balance = sc.nextDouble(); // so tien gui
+int M = sc.nextInt(); // so thang gui
+
+double[] rates = {3.90, 3.92, 3.95, 3.99, 4.04, 5.54, 5.72, 5.92, 6.14, 6.38, 6.64, 6.92};
+
+// Tinh so ky han 12 thang
+int full_years = M / 12;
+// Tinh so thang con lai (so thang cua ky han cuoi cung)
+int left_months = M % 12;
+
+// Tinh so tien nhan duoc sau M thang
+if (left_months > 0) {
+    balance = balance * (1 + 6.92/100)^full_years * (1 + rate[left_months-1]/100/12*left_months);
+}
+else {
+    balance = balance * (1 + 6.92/100)^full_years;
+}
+sysout(Math.round(balance));
+
+```
+
 ### **EIAPP21222FQ2**
 ```bash
 Gửi tiết kiệm:
@@ -74,3 +98,66 @@ T14:
 Tính tổng:
     balance = balance1 + balance2 +...+balance14
 ```
+
+```bash
+int N = sc.nextInt();
+double[] rates = {3.90, 3.92, 3.95, 3.99, 4.04, 5.54, 5.72, 5.92, 6.14, 6.38, 6.64, 6.92};
+
+double total = 0;
+
+for (int i=0; i<N; i++) {
+    double balance = sc.nextDouble();
+
+    int full_years = M / 12;
+    int left_months = M % 12;
+
+    if (left_months > 0) {
+        balance = balance * (1 + 6.92/100)^full_years * (1 + rate[left_months-1]/100/12*left_months);
+    }
+    else {
+        balance = balance * (1 + 6.92/100)^full_years;
+    }
+    total += balance;
+}
+
+```
+
+### **Saving 3**
+```bash
+Giả sử: Mỗi tháng gửi X đồng
+Thời gian: M tháng
+
+T1: Cuốn sổ tiết kiệm 1:
+Thời hạn: M tháng
+balance = X * (1 + 6.92/100)^full_years * (1 + rate[left_months-1]/100/12*left_months);
+
+M tháng:
+X * ((1 + 6.92/100)^full_years * (1 + rate[left_months-1]/100/12*left_months) + (1 + 6.92/100)^full_years * (1 + rate[left_months-1]/100/12*left_months) + ....) = N
+
+=> X = N / sum_of_factors
+```
+
+```bash
+double N
+int M
+
+double sum_of_factors = 0;
+
+for (int i=0; i<M; i++) {
+    int full_years = (M-i) / 12;
+    int left_months = (M-i) % 12;
+
+    if (left_months > 0) {
+        factor = (1 + 6.92/100)^full_years * (1 + rate[left_months-1]/100/12*left_months);
+    }
+    else {
+        factor = (1 + 6.92/100)^full_years;
+    }
+    sum_of_factors += factor;
+}
+double X = N / sum_of_factors;
+System.out.printf("%.4f", X);
+
+```
+
+
