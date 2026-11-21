@@ -160,4 +160,15 @@ System.out.printf("%.4f", X);
 
 ```
 
+### **EIINTEREST1**
+```bash
+double rate = sc.nextDouble();
+double total = 0;
 
+for (int i=0; i<12; i++) {
+    double amount = sc.nextDouble();
+
+    double balance = amount * Math.pow((1 + rate), 12-i);
+    total += balance;
+}
+```
