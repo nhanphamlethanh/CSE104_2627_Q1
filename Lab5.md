@@ -67,10 +67,10 @@ int left_months = M % 12;
 
 // Tinh so tien nhan duoc sau M thang
 if (left_months > 0) {
-    balance = balance * (1 + 6.92/100)^full_years * (1 + rate[left_months-1]/100/12*left_months);
+    balance = balance * Math.pow((1 + 6.92/100),full_years) * (1 + rate[left_months-1]/100/12*left_months);
 }
 else {
-    balance = balance * (1 + 6.92/100)^full_years;
+    balance = balance * Math.pow((1 + 6.92/100),full_years);
 }
 sysout(Math.round(balance));
 
@@ -112,10 +112,10 @@ for (int i=0; i<N; i++) {
     int left_months = M % 12;
 
     if (left_months > 0) {
-        balance = balance * (1 + 6.92/100)^full_years * (1 + rate[left_months-1]/100/12*left_months);
+        balance = balance * Math.pow((1 + 6.92/100),full_years) * (1 + rate[left_months-1]/100/12*left_months);
     }
     else {
-        balance = balance * (1 + 6.92/100)^full_years;
+        balance = balance * Math.pow((1 + 6.92/100),full_years);
     }
     total += balance;
 }
@@ -148,10 +148,10 @@ for (int i=0; i<M; i++) {
     int left_months = (M-i) % 12;
 
     if (left_months > 0) {
-        factor = (1 + 6.92/100)^full_years * (1 + rate[left_months-1]/100/12*left_months);
+        factor = Math.pow((1 + 6.92/100),full_years) * (1 + rate[left_months-1]/100/12*left_months);
     }
     else {
-        factor = (1 + 6.92/100)^full_years;
+        factor = Math.pow((1 + 6.92/100),full_years);
     }
     sum_of_factors += factor;
 }
