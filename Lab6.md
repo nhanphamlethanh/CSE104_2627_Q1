@@ -135,7 +135,7 @@ Process:
                 3. Tính Y
                     Biết: passbook_balance = debt
                     => 
-        Y = passbook_balance / (1+r2/100)^((n-m)/12) * (1+r2/100/12*((n-m)%12))
+        Y = passbook_balance / ((1+r2/100)^((n-m)/12) * (1+r2/100/12*((n-m)%12)))
 Output:
     if (X - Y > 1e-5) {
         sysout(Math.round(X))
@@ -143,4 +143,85 @@ Output:
     else {
         sysout(Math.round(Y))
     }
+```
+
+### **EIBANKLOAN2**
+```bash
+Vay: X đồng
+Lãi: r%/năm
+Trả góp mỗi tháng: Y đồng
+? Sau bao nhiêu tháng thì hết nợ?
+
+debt = X
+Sau mỗi tháng, số nợ được cập nhật:
+    debt = debt * (1 + r/100/12) - Y
+
+int month = 0;
+while (debt > 0) {
+    month++;
+    debt = debt * (1 + r/100/12) - Y;
+}
+```
+
+### **EIBANKLOAN3**
+```bash
+VD:
+X = 1 tỷ
+Y = 95 triệu
+N = 12 tháng
+r = 6%/năm
+f = 3%
+
+Trung bình tiền gốc phải trả mỗi tháng:
+    base = 1 tỷ / 12 = 83_333_333.33
+Tháng 1:
+    - Tính lãi:
+        i = 1 tỷ * 0.06/12 = 5 triệu
+    - Số tiền cần trả:
+        pay_needed = base + i = 88_333_333.33
+    - Số tiền thực tế đã trả:
+        actual_pay = 95 triệu
+        => đã trả trước
+    => Số tiền trả trước:
+        prepay = 6_472_491.909
+    => Số gốc còn lại:
+        left_principle = 1 tỷ - 83_333_333.33 - 6_472_491.909 = 910_194_174.8
+Tháng 2:
+    - Tính lãi:
+        i = left_principle * 0.06/12 = 4_550_970.874
+    - Số tiền cần trả:
+        pay_needed =  base + i - prepay 
+                    = 83_333_333.33 + 4_550_970.874 - 6_472_491.909 = 81_411_812.3
+    - Số tiền thực tế đã trả:
+        actual_pay = 95 triệu
+        => đã trả trước
+    => Số tiền trả trước:
+        prepay = (95 triệu - 81_411_812.3) / 1.03 = 13_192_415.24
+    => Số tiền gốc:
+        left_principle = 910_194_174.8 - 13_192_415.24 - (83_333_333.33 - 6_472_491.909)
+                        = 820_140_918.1
+
+double X
+double Y
+int N
+double r
+double f
+
+double base = X / N;
+double left_principle = X;
+double prepay = 0;
+
+for (int i=1; i<=N; i++) {
+    if (left_principle <= 0) {
+        break;
+    }
+    double interest = left_principle * 0.06 / 12;
+    double pay_needed = base - prepay;
+
+    prepay = (Y - pay_needed - interest) / (1 + f/100);
+
+    left_principle -= (pay_needed + prepay);
+
+    sysout(i + " " + Math.round(left_principle));
+}
 ```
