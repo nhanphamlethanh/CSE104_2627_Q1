@@ -144,3 +144,92 @@ main() {
     sysout((long) Math.floor(low));
 }
 ```
+
+### **Home Strategy**
+```bash
+Mua nhà trong N tháng.
+Giá nhà:
+    - Khởi điểm: P0
+    - Tỷ suất tăng lạm phát theo tháng: f
+    - f thay đổi sau mỗi 5 năm
+Gửi tiết kiệm:
+    - Mỗi tháng: X đồng
+    - Lãi theo tháng: r
+    - r thay đổi sau mỗi 5 năm
+Biết:
+    - Khi savings >= 30%*giá nhà hiện tại: mua nhà
+    - Vay phần tiền còn thiếu
+    - Lãi vay theo tháng: c
+Tính: X
+```
+
+```bash
+static int N
+static double P0
+static double c
+static double[] fi = new double[8]
+static double[] ri = new double[8]
+
+static boolean simulateX(double X) {
+    double savings = 0;
+    double house_price = P0;
+    double debt = 0;
+    int loan_start_month = 0;
+    double r = ri[0];
+    double f = fi[0];
+
+    for (int i=0; i<N; i++) {
+        int k = i / 60;
+        r = ri[k];
+        f = fi[k];
+        if (savings < house_price*0.3) {
+            savings += X;
+            savings *= (1 + r);
+        }
+        else {
+            debt = house_price - savings;
+            loan_start_month = i;
+            break;
+        }
+        house_price *= (1 + f);
+    }
+    for (int i=loan_start_month; i<N; i++) {
+        debt *= (1 + c);
+        debt -= X;
+    }
+    if (debt > 0) {
+        return false;
+    }
+    else {
+        return true;
+    }
+
+}
+
+main() {
+
+    for (int i=0; i<8; i++) {
+        if ()
+    }
+
+    double low
+    double high
+
+    while() {
+        double mid
+
+        boolean isX = simulateX(mid, ....);
+
+        if (isX) {
+
+        }
+        else {
+
+        }
+    }
+}
+
+
+
+
+```
