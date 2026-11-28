@@ -109,15 +109,12 @@ static boolean findX(double X, double[] income, double r, double f, int N) {
     double balance = 0;
     double expense = X;
 
-    for (int i=0; i<N; i++) {
-        double surplus = income[i] - expense;
-        balance += surplus;
-        balance *= (1 + r/100/12);
-        expense *= (1 + f/100/12);
-    }
-    for (int i=N; i<1200; i++) {
-        balance *= (1 + r/100/12);
+    for (int i=0; i<1200; i++) {
+        if (i < N) {
+            balance += income[i];
+        }
         balance -= expense;
+        balance *= (1 + r/100/12);
         expense *= (1 + f/100/12);
     }
     if (balance >= 0) {
@@ -132,7 +129,7 @@ main() {
     double low = 0;
     double high = 1e12;
 
-    while (high - low > 1e-12) {
+    for (int i=0; i<100; i++) {
         double mid = low + (high-low)/2;
 
         boolean isX = findX(mid, income, r, f, N);
@@ -143,7 +140,7 @@ main() {
         else {
             high = mid;
         }
-
     }
+    sysout((long) Math.floor(low));
 }
 ```
